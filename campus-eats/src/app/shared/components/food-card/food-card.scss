@@ -1,0 +1,167 @@
+/* Every card in a grid row keeps the same height. */
+ion-card {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  border-radius: 14px;
+  background: var(--ce-surface);
+  box-shadow: var(--ce-shadow);
+}
+
+.photo {
+  position: relative;
+
+  img {
+    width: 100%;
+    aspect-ratio: 3 / 2;   /* every photo is cropped to 3:2 around the food */
+    object-fit: cover;
+    display: block;
+  }
+
+  /* An opaque pill, so the words stay readable over any photo. */
+  .status {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    margin: 0;
+    height: 26px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: var(--ce-surface);   /* solid, not Ionic's see-through tint */
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* The photo is a link to the dish: show it can be clicked. */
+.photo-link {
+  display: block;
+  overflow: hidden;
+  cursor: pointer;
+
+  img {
+    transition: transform 200ms ease-out;
+  }
+
+  &:hover img {
+    transform: scale(1.04);
+  }
+
+  /* Operable: a clear focus ring for keyboard users. */
+  &:focus-visible {
+    outline: 3px solid var(--ion-color-primary);
+    outline-offset: -3px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photo-link img {
+    transition: none;
+  }
+
+  .photo-link:hover img {
+    transform: none;
+  }
+}
+
+/* The status pill sits on top of the photo but must not block the click. */
+.photo .status {
+  pointer-events: none;
+}
+
+.sold-out .photo img {
+  filter: grayscale(1);
+  opacity: 0.7;
+}
+
+/* Name and category on top; price and button share the bottom row. */
+.body {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "text  text"
+    "price add";
+  align-items: center;
+  gap: 6px 10px;
+  padding: 10px 14px 12px;
+}
+
+.text {
+  grid-area: text;
+  min-width: 0;
+  align-self: start;
+}
+
+/* Visual hierarchy: name first, then price, then category. */
+.name {
+  margin: 0 0 2px;
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--ce-ink);
+}
+
+.category {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--ce-muted);
+  text-transform: capitalize;
+}
+
+.price {
+  grid-area: price;
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--ce-amber-text);
+}
+
+/* Operable: a 44px-tall target with a visible label. Dark text on amber is 8.9:1. */
+ion-button.add {
+  grid-area: add;
+  height: 44px;
+  margin: 0;
+  flex-shrink: 0;
+  --padding-start: 12px;
+  --padding-end: 16px;
+  --border-radius: 999px;
+  --background: var(--ce-amber);
+  --background-hover: #e5a500;
+  --background-activated: #e5a500;
+  --color: var(--ce-on-amber);
+  --box-shadow: none;
+  font-weight: 800;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 0.9rem;
+
+  ion-icon {
+    font-size: 20px;
+    margin-inline-end: 4px;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Perceivable: Ionic's success green is 2.4:1 on its own tint -- darken the
+   text to pass 4.5:1. Dark mode keeps the bright green, which passes there. */
+@media (prefers-color-scheme: light) {
+  ion-chip.ion-color-success {
+    color: #1a7431;
+  }
+}
+
+/* A wide, low photo: 3 columns on a laptop (slide 17) without giant cards,
+   and more than one dish per screen on a phone. */
+.photo img {
+  aspect-ratio: 2 / 1;
+}

@@ -1,0 +1,109 @@
+
+<ion-header class="ce-header">
+  <ion-toolbar>
+    <ion-title>
+      <span class="ce-brand">My <span class="accent">Orders</span></span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ce-page">
+
+  <div class="ce-container">
+
+    <section class="ce-hero">
+      <p class="ce-eyebrow">Order history</p>
+      <h1>Track your <span class="accent">orders</span></h1>
+      <p class="lead">See what you ordered and where it is now.</p>
+    </section>
+
+    @if (orders.loading() && orders.visible().length === 0) {
+
+      <!-- Loading: skeletons shaped like the order cards that are coming. -->
+      <div class="orders-grid" aria-busy="true" aria-label="Loading your orders">
+        @for (row of skeletons; track row) {
+          <div class="ce-card order" aria-hidden="true">
+            <ion-skeleton-text [animated]="shimmer" style="width: 40%; height: 22px" />
+            <ion-skeleton-text [animated]="shimmer" style="width: 60%" />
+            <ion-skeleton-text [animated]="shimmer" style="width: 100%" />
+            <ion-skeleton-text [animated]="shimmer" style="width: 85%" />
+            <ion-skeleton-text [animated]="shimmer" style="width: 30%; height: 22px" />
+          </div>
+        }
+      </div>
+
+    } @else if (orders.visible().length === 0) {
+
+      <!-- Empty: say why, and give the first action. -->
+      <section class="ce-card ce-empty">
+        <span class="ce-empty-icon" aria-hidden="true">🧾</span>
+        <h2>No orders yet</h2>
+        <p>You haven't placed any orders yet.</p>
+        <ion-button class="ce-amber" routerLink="/tabs/menu">
+          Browse Menu
+        </ion-button>
+      </section>
+
+    } @else {
+
+      <div class="orders-grid">
+
+        @for (order of orders.visible(); track order.id) {
+
+          <article class="ce-card order">
+
+            <header class="order-head">
+              <div>
+                <h2 class="order-ref">Order {{ order.reference }}</h2>
+                <p class="ce-muted">{{ order.placedAt | date: 'MMM d, h:mm a' }}</p>
+              </div>
+              <!-- Status is a colour AND a word, never colour on its own. -->
+              <span class="status" [class]="'status status-' + order.status">{{ order.status }}</span>
+            </header>
+
+            <dl class="meta">
+              <div>
+                <dt>Customer</dt>
+                <dd>{{ order.customerName }}</dd>
+              </div>
+              <div>
+                <dt>Room / Stall</dt>
+                <dd>{{ order.roomOrStall }}</dd>
+              </div>
+            </dl>
+
+            <ul class="lines" aria-label="Items">
+              @for (line of order.lines; track line.itemId) {
+                <li>
+                  <span>{{ line.quantity }} × {{ line.name }}</span>
+                  <span>₱ {{ line.subtotal }}</span>
+                </li>
+              }
+            </ul>
+
+            <div class="order-total">
+              <span>Total</span>
+              <strong class="ce-amber-text">₱ {{ order.total }}</strong>
+            </div>
+
+            @if (order.status === 'pending') {
+              <ion-button
+                class="ce-outline cancel"
+                expand="block"
+                fill="outline"
+                (click)="cancel(order)">
+                Cancel Order
+              </ion-button>
+            }
+
+          </article>
+
+        }
+
+      </div>
+
+    }
+
+  </div>
+
+</ion-content>

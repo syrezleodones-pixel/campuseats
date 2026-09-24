@@ -1,0 +1,40 @@
+<ion-card [class.sold-out]="!item().available">
+
+  <div class="photo">
+    <!-- The photo opens the dish. A real link, so keyboards, screen readers and
+         "open in new tab" all work; the alt text becomes the link's name. -->
+    <a class="photo-link" [routerLink]="['/tabs/menu', item().id]">
+      <img [src]="item().image" [alt]="item().name" />
+    </a>
+
+    <!-- Status is a colour AND a word, never colour on its own. -->
+    <ion-chip class="status" [color]="item().available ? 'success' : 'medium'">
+      {{ item().available ? 'Available' : 'Sold out' }}
+    </ion-chip>
+  </div>
+
+  <div class="body">
+
+    <div class="text">
+      <h3 class="name">{{ item().name }}</h3>
+      <p class="category">{{ item().category }}</p>
+    </div>
+
+    <p class="price">₱ {{ item().price }}</p>
+
+    <!-- One primary action per card, with a visible label. The hidden part adds
+         the dish, so a screen reader hears "Add to cart, Halo-Halo". The name
+         starts with the visible words, so voice control ("click Add to cart") works. -->
+    <ion-button
+      class="add"
+      shape="round"
+      [disabled]="!item().available"
+      (click)="added.emit(item())"
+    >
+      <ion-icon name="add" slot="start" aria-hidden="true" />
+      Add to cart<span class="sr-only">, {{ item().name }}</span>
+    </ion-button>
+
+  </div>
+
+</ion-card>

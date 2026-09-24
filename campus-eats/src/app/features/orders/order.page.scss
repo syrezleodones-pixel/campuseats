@@ -1,0 +1,141 @@
+/* Phones: one column. Wider screens: two, then three. */
+.orders-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+@media (min-width: 768px) {
+  .orders-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .orders-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.order {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+
+  ion-skeleton-text {
+    margin: 0;
+  }
+}
+
+.order-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+
+  p {
+    margin: 2px 0 0;
+    font-size: 0.9rem;
+  }
+}
+
+.order-ref {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: var(--ce-ink);
+}
+
+/* Status pills: tinted background, dark text, and always the word. All pass 4.5:1. */
+.status {
+  flex-shrink: 0;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: capitalize;
+}
+
+.status-pending   { background: #fff1cc; color: #6b4200; }
+.status-preparing { background: #e6e8ff; color: #2a2f9e; }
+.status-ready     { background: #dff5e5; color: #17652c; }
+.status-delivered { background: #ececec; color: #3d3d3d; }
+.status-cancelled { background: #fde4e4; color: #9b1c1c; }
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 32px;
+  margin: 0;
+
+  dt {
+    font-size: 0.8rem;
+    color: var(--ce-muted);
+  }
+
+  dd {
+    margin: 2px 0 0;
+    font-weight: 800;
+    color: var(--ce-ink);
+  }
+}
+
+.lines {
+  list-style: none;
+  margin: 0;
+  padding: 12px 0 0;
+  border-top: 1px solid var(--ce-line);
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 4px 0;
+    color: var(--ce-ink);
+  }
+}
+
+.order-total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px solid var(--ce-line);
+  font-weight: 800;
+
+  strong {
+    font-size: 1.4rem;
+  }
+}
+
+/* A quiet, secondary action: the undo toast catches mistakes. */
+ion-button.cancel {
+  margin: 4px 0 0;
+  --color: #9b1c1c;
+  --border-color: #e7b3b3;
+}
+
+@media (prefers-color-scheme: dark) {
+  ion-button.cancel {
+    --color: #ffb4b4;
+    --border-color: #7a3b3b;
+  }
+}
+
+/* Cancel keeps its red on hover. */
+@media (hover: hover) {
+  ion-button.cancel:hover {
+    --border-color: #9b1c1c;
+    --background-hover: #9b1c1c;
+    --background-hover-opacity: 0.08;
+  }
+}
+
+@media (hover: hover) and (prefers-color-scheme: dark) {
+  ion-button.cancel:hover {
+    --border-color: #ffb4b4;
+    --background-hover: #ffb4b4;
+  }
+}

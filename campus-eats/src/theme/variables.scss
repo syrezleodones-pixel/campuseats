@@ -1,0 +1,52 @@
+// For information on how to create your own theme, please refer to:
+// https://ionicframework.com/docs/theming/
+
+/*
+ * CampusEats theme -- one type ramp and one palette, picked once (Consistency).
+ * Amber is split in two: the bright one is for shapes and the "+" button,
+ * the darker ones are for text, because bright amber on white is only 1.8:1.
+ */
+:root {
+  --ion-font-family: 'Nunito', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  /* Primary: deep indigo (active chip, selected tab, badges). White on it is 10.5:1. */
+  --ion-color-primary: #2a2f9e;
+  --ion-color-primary-rgb: 42, 47, 158;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #252a8b;
+  --ion-color-primary-tint: #3f44a8;
+
+  --ce-page-bg: #f6f5f3;
+  --ce-surface: #ffffff;
+  --ce-hero-bg: #fbf6ee;
+  --ce-ink: #1f1a14;                /* headings */
+  --ce-muted: #6b6b6b;              /* 5.3:1 on white */
+  --ce-line: rgba(0, 0, 0, 0.12);
+  --ce-amber: #f6b40e;              /* shapes, underline, "+" button -- never text */
+  --ce-on-amber: #2b1d0e;           /* icon on the amber button, 8.9:1 */
+  --ce-amber-text-large: #b36f00;   /* big headline words, 3.8:1 on cream (large text needs 3:1) */
+  --ce-amber-text: #a86400;         /* prices, 4.7:1 on white */
+  --ce-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ion-color-primary: #9ea3ff;
+    --ion-color-primary-rgb: 158, 163, 255;
+    --ion-color-primary-contrast: #10124a;
+    --ion-color-primary-contrast-rgb: 16, 18, 74;
+    --ion-color-primary-shade: #8b8fe0;
+    --ion-color-primary-tint: #a8acff;
+
+    --ce-page-bg: #121212;
+    --ce-surface: #1e1e1e;
+    --ce-hero-bg: #221c14;
+    --ce-ink: #f4efe8;
+    --ce-muted: #b5b0a8;
+    --ce-line: rgba(255, 255, 255, 0.16);
+    --ce-amber-text-large: #f6b40e;  /* bright amber reads fine on dark: 9:1 */
+    --ce-amber-text: #f6b40e;
+    --ce-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  }
+}

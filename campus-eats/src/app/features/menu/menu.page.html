@@ -1,0 +1,232 @@
+
+<ion-header class="menu-header">
+  <ion-toolbar>
+
+    <ion-title>
+      <span class="brand">Food <span class="accent">Menu</span></span>
+    </ion-title>
+
+    <!-- Cart and Orders live in the tab bar; the header only holds the account. -->
+    <ion-buttons slot="end">
+
+      @if (auth.user(); as user) {
+
+        <ion-button
+          id="profile-trigger"
+          class="avatar-button"
+          shape="round"
+          [attr.aria-label]="'Account: ' + user.name"
+          aria-haspopup="dialog"
+        >
+          <span class="avatar" aria-hidden="true">{{ initials() }}</span>
+        </ion-button>
+
+        <!-- ion-popover: a small panel anchored to the avatar, gone with one tap outside. -->
+        <ion-popover trigger="profile-trigger" triggerAction="click" alignment="end" side="bottom" role="dialog" aria-label="Account">
+          <ng-template>
+            <ion-content class="profile-panel">
+              <div class="profile">
+                <span class="avatar large" aria-hidden="true">{{ initials() }}</span>
+                <div>
+                  <p class="profile-name">{{ user.name }}</p>
+                  <p class="profile-email">{{ user.email }}</p>
+                  <p class="profile-role">{{ user.role }}</p>
+                </div>
+              </div>
+              <ion-button expand="block" fill="outline" color="danger" (click)="signOut()">
+                <ion-icon name="log-out-outline" slot="start" aria-hidden="true" />
+                Sign out
+              </ion-button>
+            </ion-content>
+          </ng-template>
+        </ion-popover>
+
+      } @else {
+
+        <ion-button class="pill" fill="outline" shape="round" routerLink="/login">
+          <ion-icon name="person-circle-outline" slot="start" aria-hidden="true" />
+          Sign in
+        </ion-button>
+
+      }
+
+    </ion-buttons>
+
+  </ion-toolbar>
+
+  <!-- Fixed part: the question, the search and the filters stay put while you
+       scroll. Only the dishes below move, so the filters are always one tap away. -->
+  <div class="menu-top">
+    <div class="menu-container top-inner">
+
+      <!-- Visual hierarchy: one big question, read first. -->
+      <section class="hero">
+        <div class="hero-text">
+          <p class="eyebrow">Good day!</p>
+          <h1>What would you like <span class="accent">to eat today?</span></h1>
+          <p class="lead">Browse the available dishes and add your favorites to your cart.</p>
+        </div>
+
+        <!-- Decoration only: hidden from screen readers. -->
+        <svg class="hero-art" viewBox="0 0 320 180" aria-hidden="true" focusable="false">
+          <path class="blob" d="M150 180 C 120 120, 160 40, 250 18 C 290 8, 320 10, 320 10 L 320 180 Z" />
+          <circle class="dot" cx="42" cy="140" r="34" />
+          <g class="dots">
+            <circle cx="282" cy="130" r="3" /><circle cx="296" cy="130" r="3" /><circle cx="310" cy="130" r="3" />
+            <circle cx="282" cy="144" r="3" /><circle cx="296" cy="144" r="3" /><circle cx="310" cy="144" r="3" />
+            <circle cx="282" cy="158" r="3" /><circle cx="296" cy="158" r="3" /><circle cx="310" cy="158" r="3" />
+          </g>
+          <g class="dash">
+            <path d="M112 70 L 132 78" /><path d="M110 92 L 132 88" />
+          </g>
+          <g class="cutlery">
+            <!-- fork -->
+            <path d="M168 40 L 172 72 Q 176 88 192 86 Q 206 82 204 66 L 200 34" />
+            <path d="M180 38 L 184 70" /><path d="M190 36 L 194 68" />
+            <path d="M190 86 L 212 162" />
+            <!-- spoon -->
+            <ellipse cx="248" cy="56" rx="20" ry="30" transform="rotate(-8 248 56)" />
+            <path d="M250 86 L 258 162" />
+          </g>
+        </svg>
+      </section>
+
+      @if (!(menu.loading() && items().length === 0) && !menu.error()) {
+
+        <div class="search-filter">
+
+          <ion-searchbar
+            placeholder="Search dishes..."
+            [value]="searchQuery()"
+            (ionInput)="onSearchInput($event)"
+          >
+          </ion-searchbar>
+
+          <div class="filter-chips">
+
+            @for (filter of filters; track filter) {
+
+              <ion-chip
+                role="button"
+                tabindex="0"
+                [outline]="true"
+                [class.active]="activeFilter() === filter"
+                [attr.aria-pressed]="activeFilter() === filter"
+                (click)="setFilter(filter)"
+                (keydown)="onChipKeydown($event, filter)"
+              >
+                <ion-label>{{ label(filter) }}</ion-label>
+              </ion-chip>
+
+            }
+
+          </div>
+
+        </div>
+
+        <div class="section-head">
+          <h2>Today's Dishes</h2>
+          <p class="count">
+            {{ filteredItems().length }} dish{{ filteredItems().length === 1 ? '' : 'es' }} shown
+          </p>
+        </div>
+
+      }
+
+    </div>
+  </div>
+
+</ion-header>
+
+<ion-content class="dishes-scroll">
+
+  <!-- A gesture people already know; the same reload() as the retry button. -->
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+    <ion-refresher-content
+      pullingText="Pull to refresh"
+      refreshingSpinner="crescent"
+    />
+  </ion-refresher>
+
+  <div class="menu-container dishes">
+
+    @if (menu.loading() && items().length === 0) {
+
+      <!-- Skeletons preview the shape of the content, so nothing jumps.
+           Same parts as app-food-card: photo, name, category, price, round button. -->
+      <ion-grid [fixed]="true" class="card-grid" aria-busy="true" aria-label="Loading the menu">
+        <ion-row>
+          @for (row of skeletons; track row) {
+            <ion-col size="12" size-md="6" size-lg="4">
+              <ion-card class="skeleton-card" aria-hidden="true">
+                <ion-skeleton-text [animated]="shimmer" class="skeleton-image" />
+                <div class="skeleton-body">
+                  <div class="skeleton-lines">
+                    <ion-skeleton-text [animated]="shimmer" style="width: 70%; height: 16px" />
+                    <ion-skeleton-text [animated]="shimmer" style="width: 35%" />
+                  </div>
+                  <div class="skeleton-row">
+                    <ion-skeleton-text [animated]="shimmer" style="width: 25%; height: 20px" />
+                    <ion-skeleton-text [animated]="shimmer" class="skeleton-button" />
+                  </div>
+                </div>
+              </ion-card>
+            </ion-col>
+          }
+        </ion-row>
+      </ion-grid>
+
+    }
+
+    @else if (menu.error()) {
+
+      <app-error-state title="Unable to load menu" (retry)="menu.reload()" />
+
+    }
+
+    @else {
+
+      <ion-grid [fixed]="true" class="card-grid">
+        <ion-row>
+
+          @for (item of filteredItems(); track item.id) {
+
+            <ion-col size="12" size-md="6" size-lg="4">
+              <app-food-card
+                [item]="item"
+                (added)="addToCart($event)">
+              </app-food-card>
+            </ion-col>
+
+          } @empty {
+
+            <ion-col size="12">
+              <ion-card class="empty-state">
+                <ion-card-content>
+
+                  @if (items().length > 0) {
+                    <!-- Say why: the list is empty because of the search or filter. -->
+                    <h2>😔 Nothing matches {{ emptyReason() }}</h2>
+                    <p>Try another word, or see every dish again.</p>
+                    <ion-button class="ce-amber" (click)="clearFilters()">Show all dishes</ion-button>
+                  } @else {
+                    <!-- Say why: the canteen has nothing listed yet. -->
+                    <h2>🍽️ The canteen hasn't posted today's menu yet</h2>
+                    <p>Dishes usually go up before 10 AM.</p>
+                    <ion-button class="ce-amber" (click)="menu.reload()">Check again</ion-button>
+                  }
+
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+
+          }
+
+        </ion-row>
+      </ion-grid>
+
+    }
+
+  </div>
+
+</ion-content>

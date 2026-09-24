@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="cancel()">Cancel</ion-button>
+    </ion-buttons>
+
+    <ion-title>Edit item</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button [strong]="true" (click)="save()">Save</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <h2>{{ line.item.emoji }} {{ line.item.name }}</h2>
+  <p>PHP {{ line.item.price }} each</p>
+
+  <div class="stepper">
+    <ion-button
+      fill="outline"
+      aria-label="Decrease quantity"
+      [disabled]="quantity() <= 1"
+      (click)="change(-1)"
+    >
+      <ion-icon name="remove-outline" slot="icon-only" aria-hidden="true"></ion-icon>
+    </ion-button>
+
+    <strong class="qty" aria-live="polite">{{ quantity() }}</strong>
+
+    <ion-button
+      fill="outline"
+      aria-label="Increase quantity"
+      [disabled]="quantity() >= 50"
+      (click)="change(1)"
+    >
+      <ion-icon name="add-outline" slot="icon-only" aria-hidden="true"></ion-icon>
+    </ion-button>
+  </div>
+
+  <p class="subtotal">
+    Subtotal: <strong>PHP {{ line.item.price * quantity() }}</strong>
+  </p>
+
+</ion-content>

@@ -1,0 +1,10 @@
+<!-- Error: plain language, then a way forward. -->
+<section class="ce-card ce-empty" role="alert">
+  <span class="ce-empty-icon" aria-hidden="true">😕</span>
+  <h2>{{ title() }}</h2>
+  <p>{{ message() }}</p>
+
+  <ion-button class="ce-amber" (click)="retry.emit()">
+    Try Again
+  </ion-button>
+</section>

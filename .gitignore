@@ -1,0 +1,15 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Node / Angular (built again by Vercel)
+node_modules/
+campus-eats/www/
+campus-eats/.angular/
+
+# Editors and OS
+.vscode/
+.DS_Store
+Thumbs.db
+*.log

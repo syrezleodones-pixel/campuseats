@@ -1,0 +1,108 @@
+/* Phones: one column. Laptops: lines on the left, checkout on the right. */
+.cart-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+@media (min-width: 992px) {
+  .cart-layout {
+    grid-template-columns: 1.6fr 1fr;
+  }
+
+  /* The checkout stays in view while a long cart scrolls. */
+  .checkout {
+    position: sticky;
+    top: 16px;
+  }
+}
+
+.line {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px;
+}
+
+.thumb {
+  width: 84px;
+  height: 64px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.line-info {
+  flex: 1;
+  min-width: 0;
+
+  p {
+    margin: 2px 0 0;
+  }
+}
+
+.line-name {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--ce-ink);
+}
+
+.line-actions {
+  display: flex;
+}
+
+/* Operable: icon buttons get a 44x44 touch target. */
+.line-actions ion-button {
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  --color: var(--ce-ink);
+}
+
+.checkout {
+  margin-bottom: 0;
+}
+
+.total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-bottom: 14px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--ce-line);
+  font-size: 1.1rem;
+  font-weight: 800;
+
+  strong {
+    font-size: 1.6rem;
+  }
+}
+
+ion-button.ce-amber {
+  margin: 4px 0 0;
+}
+
+/* Round hover and focus circles on the edit and remove buttons. */
+.line-actions ion-button {
+  --border-radius: 50%;
+}
+
+/* The line card lifts a little under the pointer. */
+.line {
+  transition: box-shadow 150ms ease-out;
+}
+
+@media (hover: hover) {
+  .line:hover {
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Remove is destructive: red on hover, not amber. */
+  .line-actions ion-button.remove:hover {
+    --color: #9b1c1c;
+    --background-hover: #9b1c1c;
+    --background-hover-opacity: 0.1;
+  }
+}

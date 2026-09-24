@@ -1,0 +1,376 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/**
+ * Ionic Dark Mode
+ * -----------------------------------------------------
+ * For more info, please see:
+ * https://ionicframework.com/docs/theming/dark-mode
+ */
+
+/* @import "@ionic/angular/css/palettes/dark.always.css"; */
+/* @import "@ionic/angular/css/palettes/dark.class.css"; */
+@import '@ionic/angular/css/palettes/dark.system.css';
+
+/*
+ * IonTabs (Ionic 9) renders an empty, transparent <ion-router-outlet> on top
+ * of the page content. Because it is hit-testable, it swallows all wheel and
+ * pointer events, which breaks scrolling. Never let an empty outlet block
+ * the page underneath.
+ */
+ion-tabs > ion-router-outlet:empty {
+  pointer-events: none;
+}
+
+/*
+ * A "fixed" ion-grid locks its width per breakpoint (540/720/960/1140px),
+ * which squeezes the menu into a narrow band with big gaps on the sides.
+ * Fill tablet/laptop widths fully and keep only the xl cap (1140px) for
+ * very large monitors. In Angular, [fixed]="true" adds the class
+ * "grid-fixed" (not the attribute), so target that class.
+ */
+ion-grid.grid-fixed {
+  --ion-grid-width-sm: 100%;
+  --ion-grid-width-md: 100%;
+  --ion-grid-width-lg: 100%;
+}
+
+/* ==========================================================================
+ * CampusEats page kit -- the Menu page's look, shared by Cart, Orders and
+ * Sign in. One spacing scale, one type ramp, one button style (Consistency).
+ * ======================================================================== */
+
+.ce-page {
+  --background: var(--ce-page-bg);
+}
+
+.ce-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px clamp(12px, 4vw, 48px) 32px;
+}
+
+/* Header: white bar, bold two-tone title. */
+.ce-header ion-toolbar {
+  --background: var(--ce-surface);
+  --min-height: 64px;
+  padding-inline: clamp(4px, 3vw, 40px);
+}
+
+.ce-brand {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--ce-ink);
+
+  .accent {
+    color: var(--ce-amber-text-large);
+  }
+}
+
+@media (max-width: 575px) {
+  .ce-brand {
+    font-size: 1.3rem;
+  }
+}
+
+/* Page hero: eyebrow, one big line, one short lead. */
+.ce-hero {
+  padding: 24px clamp(20px, 3vw, 40px);
+  margin-bottom: 20px;
+  border-radius: 16px;
+  background: var(--ce-hero-bg);
+  box-shadow: var(--ce-shadow);
+
+  h1 {
+    margin: 0 0 6px;
+    font-size: clamp(1.5rem, 3vw, 2.3rem);
+    font-weight: 900;
+    line-height: 1.15;
+    color: var(--ce-ink);
+  }
+
+  h1 .accent {
+    color: var(--ce-amber-text-large);
+  }
+
+  .lead {
+    margin: 0;
+    font-size: 1.05rem;
+    color: var(--ce-muted);
+  }
+}
+
+.ce-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 8px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ce-muted);
+
+  &::after {
+    content: '';
+    width: 32px;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--ce-amber);
+  }
+}
+
+/* White rounded card. */
+.ce-card {
+  margin: 0 0 16px;
+  padding: 20px;
+  border-radius: 14px;
+  background: var(--ce-surface);
+  box-shadow: var(--ce-shadow);
+  color: var(--ce-ink);
+}
+
+.ce-card-title {
+  margin: 0 0 12px;
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: var(--ce-ink);
+}
+
+/* Section heading with the amber underline. */
+.ce-section-title {
+  position: relative;
+  margin: 8px 0 16px;
+  padding-bottom: 10px;
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--ce-ink);
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 44px;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--ce-amber);
+  }
+}
+
+/* The one primary button: amber with dark text (8.9:1), like "Add to cart". */
+ion-button.ce-amber {
+  height: 48px;
+  --border-radius: 999px;
+  --background: var(--ce-amber);
+  --background-hover: #e5a500;
+  --background-activated: #e5a500;
+  --background-focused: #e5a500;
+  --color: var(--ce-on-amber);
+  --box-shadow: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* Secondary pill: outline, same shape. */
+ion-button.ce-outline {
+  height: 44px;
+  --border-radius: 999px;
+  --border-color: var(--ce-line);
+  --border-width: 1px;
+  --color: var(--ce-ink);
+  font-weight: 800;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* Rounded outline inputs. */
+ion-input.ce-input {
+  --border-radius: 12px;
+  /* Focus and "valid" both use the amber, not Ionic's default green. */
+  --highlight-color-focused: var(--ce-amber-text);
+  --highlight-color-valid: var(--ce-amber-text);
+  margin-bottom: 14px;
+  font-weight: 600;
+}
+
+/* Empty states: say why, then the first action. */
+.ce-empty {
+  padding: 36px 20px;
+  text-align: center;
+
+  .ce-empty-icon {
+    display: block;
+    font-size: 3rem;
+    margin-bottom: 8px;
+  }
+
+  h2 {
+    margin: 0 0 6px;
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: var(--ce-ink);
+  }
+
+  p {
+    margin: 0 0 18px;
+    color: var(--ce-muted);
+  }
+}
+
+.ce-amber-text {
+  color: var(--ce-amber-text);
+  font-weight: 900;
+}
+
+.ce-muted {
+  color: var(--ce-muted);
+}
+
+/* ==========================================================================
+ * Hover -- every clickable thing answers the pointer (Feedback, slide 15).
+ * Only on devices that really hover, so a tap on a phone never "sticks".
+ * Keyboard focus gets the same look, so keyboards get the same feedback.
+ * ======================================================================== */
+
+@media (hover: hover) {
+  ion-button,
+  ion-back-button {
+    transition: transform 150ms ease-out, box-shadow 150ms ease-out;
+  }
+
+  /* Solid amber buttons: a deeper amber and a small lift. */
+  ion-button.ce-amber,
+  ion-button.add {
+    --background-hover-opacity: 1;
+    --background-focused-opacity: 1;
+  }
+
+  ion-button.ce-amber:hover:not(.button-disabled),
+  ion-button.add:hover:not(.button-disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(246, 180, 14, 0.45);
+    border-radius: 999px;
+  }
+
+  /* Outline, clear and toolbar buttons: an amber tint, and an amber edge. */
+  ion-button[fill='outline'],
+  ion-button[fill='clear'],
+  ion-button.ce-outline,
+  ion-buttons ion-button,
+  ion-back-button {
+    --background-hover: var(--ce-amber);
+    --background-hover-opacity: 0.18;
+    --background-focused: var(--ce-amber);
+    --background-focused-opacity: 0.18;
+  }
+
+  ion-button[fill='outline']:hover:not(.button-disabled),
+  ion-button.ce-outline:hover:not(.button-disabled) {
+    --border-color: var(--ce-amber);
+  }
+
+  /* Destructive buttons keep their own colour on hover. */
+  ion-button[color='danger'] {
+    --background-hover: var(--ion-color-danger);
+    --background-hover-opacity: 0.1;
+    --background-focused: var(--ion-color-danger);
+    --background-focused-opacity: 0.1;
+  }
+
+  ion-button[color='danger']:hover:not(.button-disabled) {
+    --border-color: var(--ion-color-danger);
+  }
+
+  /* Toast buttons: Undo, View cart, Sign in -- a deeper amber, like Add to cart. */
+  ion-toast::part(button):hover {
+    background: #e5a500;
+  }
+}
+
+/* ==========================================================================
+ * Toasts in the page style: a white card, dark words, a coloured bar on the
+ * left that says what kind of message it is, and amber buttons like
+ * "Add to cart". Every colour pair here passes 4.5:1.
+ * ======================================================================== */
+
+ion-toast {
+  --background: var(--ce-surface);
+  --color: var(--ce-ink);
+  --border-radius: 14px;
+  --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+  --border-style: solid;
+  --border-width: 0 0 0 6px;
+  --border-color: var(--ce-amber);      /* plain toasts, e.g. "Removed … / Undo" */
+  --max-width: 560px;
+}
+
+/* Ionic paints coloured toasts from --ion-color-base; keep them white too,
+   and let the bar carry the colour instead. */
+ion-toast.ion-color-success,
+ion-toast.ion-color-warning,
+ion-toast.ion-color-danger {
+  --ion-color-base: var(--ce-surface) !important;
+  --ion-color-contrast: var(--ce-ink) !important;
+}
+
+ion-toast.ion-color-success { --border-color: #1f8a3d; }
+ion-toast.ion-color-warning { --border-color: var(--ce-amber); }
+ion-toast.ion-color-danger  { --border-color: #c0392b; }
+
+ion-toast::part(message) {
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+/* Undo, View cart, Sign in: the amber pill. */
+ion-toast::part(button) {
+  min-height: 40px;
+  margin-inline-start: 8px;
+  padding-inline: 16px;
+  border-radius: 999px;
+  background: var(--ce-amber);
+  color: var(--ce-on-amber);
+  font-weight: 800;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* Reduced motion: colour changes stay, the lift goes. */
+@media (prefers-reduced-motion: reduce) {
+  ion-button,
+  ion-back-button {
+    transition: none !important;
+  }
+
+  ion-button:hover {
+    transform: none !important;
+  }
+}

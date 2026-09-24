@@ -1,0 +1,639 @@
+ion-content {
+  --background: var(--ce-page-bg);
+}
+
+.menu-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 16px clamp(12px, 4vw, 48px) 32px;
+}
+
+/* ---------- Fixed top, scrolling dishes ---------- */
+
+/* The part of the header under the toolbar: hero, search, filters, heading. */
+.menu-top {
+  background: var(--ce-page-bg);
+}
+
+.top-inner {
+  padding-bottom: 4px;
+}
+
+/* Only this area scrolls. */
+.dishes {
+  padding-top: 12px;
+}
+
+/* ---------- Header ---------- */
+
+.menu-header ion-toolbar {
+  --background: var(--ce-surface);
+  --min-height: 64px;
+  padding-inline: clamp(4px, 3vw, 40px);
+}
+
+.brand {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--ce-ink);
+
+  .accent {
+    color: var(--ce-amber-text-large);
+  }
+}
+
+ion-button.pill {
+  --border-color: var(--ce-line);
+  --border-width: 1px;
+  --color: var(--ce-ink);
+  --padding-start: 14px;
+  --padding-end: 14px;
+  height: 40px;
+  font-weight: 800;
+}
+
+/* Profile avatar: a 44x44 target with the user's initials. */
+ion-button.avatar-button {
+  width: 44px;
+  height: 44px;
+  --padding-start: 0;
+  --padding-end: 0;
+  --border-radius: 50%;
+}
+
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--ion-color-primary);
+  color: var(--ion-color-primary-contrast);
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+
+  &.large {
+    width: 52px;
+    height: 52px;
+    font-size: 1.15rem;
+    flex-shrink: 0;
+  }
+}
+
+/* The popover panel. */
+.profile-panel {
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --padding-top: 16px;
+  --padding-bottom: 16px;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+
+  p {
+    margin: 0;
+  }
+}
+
+.profile-name {
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--ce-ink);
+}
+
+.profile-email {
+  color: var(--ce-muted);
+  font-size: 0.9rem;
+}
+
+.profile-role {
+  margin-top: 4px !important;
+  color: var(--ce-muted);
+  font-size: 0.8rem;
+  text-transform: capitalize;
+}
+
+/* Phones: a smaller brand so the title never truncates. */
+@media (max-width: 575px) {
+  .brand {
+    font-size: 1.3rem;
+  }
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 176px;
+  padding: 28px clamp(20px, 3vw, 40px);
+  border-radius: 16px;
+  background: var(--ce-hero-bg);
+  box-shadow: var(--ce-shadow);
+}
+
+.hero-text {
+  position: relative;
+  z-index: 1;
+  max-width: 820px;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 8px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ce-muted);
+
+  &::after {
+    content: '';
+    width: 32px;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--ce-amber);
+  }
+}
+
+.hero h1 {
+  margin: 0 0 8px;
+  font-size: clamp(1.7rem, 3.6vw, 2.9rem);
+  font-weight: 900;
+  line-height: 1.15;
+  color: var(--ce-ink);
+
+  .accent {
+    color: var(--ce-amber-text-large);
+  }
+}
+
+.lead {
+  margin: 0;
+  font-size: 1.05rem;
+  color: var(--ce-muted);
+}
+
+.hero-art {
+  flex-shrink: 0;
+  width: clamp(200px, 26vw, 330px);
+  align-self: stretch;
+  margin: -28px clamp(-40px, -3vw, -20px) -28px 0;
+
+  .blob { fill: var(--ce-amber); }
+  .dot { fill: var(--ce-amber); opacity: 0.18; }
+  .dots circle { fill: var(--ce-amber); opacity: 0.45; }
+  .dash path { stroke: var(--ce-amber); stroke-width: 5; stroke-linecap: round; fill: none; }
+  .cutlery * { stroke: var(--ce-on-amber); stroke-width: 9; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+}
+
+@media (prefers-color-scheme: dark) {
+  .hero-art .cutlery * { stroke: #f4efe8; }
+}
+
+/* Phones: the art would crowd the question, so it steps aside. */
+@media (max-width: 575px) {
+  .hero-art {
+    display: none;
+  }
+}
+
+/* ---------- Search and filters ---------- */
+
+.search-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 20px 0 8px;
+
+  ion-searchbar {
+    padding: 0;
+    --background: var(--ce-surface);
+    --border-radius: 999px;
+    --box-shadow: var(--ce-shadow);
+    --placeholder-color: var(--ce-muted);
+    --placeholder-opacity: 1;
+    min-height: 54px;
+  }
+}
+
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  ion-chip {
+    margin: 0;
+    height: 44px;             /* Operable: a target you can hit */
+    padding-inline: 22px;
+    font-size: 1rem;
+    font-weight: 700;
+    --color: var(--ce-ink);
+    border-color: var(--ce-line);
+    background: var(--ce-surface);
+  }
+
+  /* The chosen filter wears the Add-to-cart colours: amber with dark text (8.9:1). */
+  ion-chip.active {
+    --background: var(--ce-amber);
+    --color: var(--ce-on-amber);
+    background: var(--ce-amber);
+    border-color: var(--ce-amber);
+    font-weight: 800;
+  }
+}
+
+/* ---------- Section heading ---------- */
+
+.section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 24px 0 8px;
+
+  h2 {
+    margin: 0;
+    padding-bottom: 10px;
+    position: relative;
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: var(--ce-ink);
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 44px;
+      height: 4px;
+      border-radius: 2px;
+      background: var(--ce-amber);
+    }
+  }
+
+  .count {
+    margin: 0 0 12px;
+    color: var(--ce-muted);
+    font-weight: 600;
+  }
+}
+
+/* ---------- Grid ---------- */
+
+.card-grid {
+  padding: 0;
+  --ion-grid-padding: 0;
+  --ion-grid-width-xl: 100%;   /* fill the container like the hero above it */
+
+  ion-row {
+    align-items: stretch;
+    margin-inline: -8px;
+  }
+
+  ion-col {
+    display: flex;
+    padding: 8px;
+  }
+}
+
+app-food-card {
+  width: 100%;
+}
+
+/* Skeleton card: same parts and proportions as app-food-card. */
+.skeleton-card {
+  width: 100%;
+  margin: 0;
+  border-radius: 14px;
+  background: var(--ce-surface);
+  box-shadow: var(--ce-shadow);
+
+  .skeleton-image {
+    aspect-ratio: 3 / 2;
+    height: auto;
+    margin: 0;
+    border-radius: 0;
+  }
+
+  .skeleton-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px 14px 12px;
+  }
+
+  .skeleton-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    ion-skeleton-text {
+      margin: 0;
+    }
+  }
+
+  .skeleton-lines {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .skeleton-button {
+    width: 120px;
+    height: 44px;
+    margin: 0;
+    border-radius: 999px;
+  }
+}
+
+.empty-state {
+  margin: 0;
+  width: 100%;
+  text-align: center;
+  border-radius: 14px;
+  background: var(--ce-surface);
+}
+
+/* The error card sits below the hero with the same gap as the search bar. */
+app-error-state {
+  display: block;
+  margin-top: 20px;
+}
+
+/* ---------- Hover ---------- */
+
+.filter-chips ion-chip {
+  transition: background-color 150ms ease-out, border-color 150ms ease-out, transform 150ms ease-out;
+}
+
+@media (hover: hover) {
+  /* An unchosen filter previews the amber it would get. */
+  .filter-chips ion-chip:not(.active):hover {
+    border-color: var(--ce-amber);
+    background: rgba(246, 180, 14, 0.16);
+    transform: translateY(-1px);
+  }
+
+  .filter-chips ion-chip.active:hover {
+    background: #e5a500;
+    border-color: #e5a500;
+  }
+
+  /* The avatar gets an amber ring. */
+  ion-button.avatar-button:hover .avatar {
+    box-shadow: 0 0 0 3px var(--ce-amber);
+  }
+}
+
+/* Keyboard users get the same ring on the chips. */
+.filter-chips ion-chip:focus-visible {
+  outline: 3px solid var(--ce-amber-text);
+  outline-offset: 2px;
+}
+
+.avatar {
+  transition: box-shadow 150ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .filter-chips ion-chip {
+    transition: none;
+  }
+
+  .filter-chips ion-chip:hover {
+    transform: none !important;
+  }
+}
+
+/* Sign in lives in the toolbar, whose own grey hover would win: set the amber here. */
+ion-button.pill {
+  --background-hover: var(--ce-amber);
+  --background-hover-opacity: 0.18;
+  --background-focused: var(--ce-amber);
+  --background-focused-opacity: 0.18;
+}
+
+@media (hover: hover) {
+  ion-button.pill:hover {
+    --border-color: var(--ce-amber);
+  }
+}
+
+/* ---------- Keep the fixed part small where space is short ---------- */
+
+/* Phones, and laptops with short screens: a compact hero, so the dishes
+   still get most of the screen. */
+@media (max-width: 575px), (max-height: 820px) {
+  .top-inner {
+    padding-top: 10px;
+  }
+
+  .hero {
+    min-height: 0;
+    padding: 14px 18px;
+  }
+
+  .hero h1 {
+    font-size: clamp(1.25rem, 3vw, 1.9rem);
+    margin-bottom: 0;
+  }
+
+  .eyebrow {
+    margin-bottom: 4px;
+    font-size: 0.75rem;
+  }
+
+  .lead {
+    display: none;   /* the question says it already */
+  }
+
+  .hero-art {
+    width: 170px;
+    margin-block: -14px;
+  }
+
+  .search-filter {
+    margin-top: 12px;
+    gap: 10px;
+
+    ion-searchbar {
+      min-height: 46px;
+    }
+  }
+
+  .section-head {
+    margin: 12px 0 0;
+
+    h2 {
+      font-size: 1.3rem;
+      padding-bottom: 8px;
+    }
+
+    .count {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+/* Phones: the filters become one row you swipe sideways, instead of two rows. */
+@media (max-width: 575px) {
+  .filter-chips {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 8px;
+    margin-inline: -12px;
+    padding: 2px 12px 4px;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    ion-chip {
+      flex-shrink: 0;
+      height: 44px;
+      padding-inline: 18px;
+    }
+  }
+}
+
+/* ---------- Laptops: a slimmer fixed part, so the dishes get the room ---------- */
+
+@media (min-width: 576px) {
+  .hero {
+    min-height: 0;
+    padding: 18px clamp(20px, 3vw, 40px);
+  }
+
+  .hero h1 {
+    font-size: clamp(1.5rem, 2.6vw, 2.3rem);
+  }
+
+  .hero-art {
+    width: clamp(160px, 17vw, 230px);
+    margin-block: -18px;
+  }
+
+  .section-head {
+    margin: 14px 0 0;
+
+    h2 {
+      font-size: 1.4rem;
+      padding-bottom: 8px;
+    }
+
+    .count {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+/* Wide screens: search and filters share one row. */
+@media (min-width: 992px) {
+  .search-filter {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    margin-top: 14px;
+
+    ion-searchbar {
+      flex: 1 1 320px;
+      min-height: 48px;
+    }
+  }
+
+  .filter-chips {
+    flex-wrap: nowrap;
+    gap: 8px;
+
+    ion-chip {
+      padding-inline: 18px;
+    }
+  }
+}
+
+/* The skeleton photo matches the card photo. */
+.skeleton-card .skeleton-image {
+  aspect-ratio: 2 / 1;
+}
+
+/* ---------- Laptops: the fixed top as slim as it can be ---------- */
+/* Every pixel saved here goes to the scrolling dishes. */
+@media (min-width: 576px) {
+  .top-inner {
+    padding-top: 10px;
+  }
+
+  .hero {
+    padding: 12px clamp(20px, 3vw, 36px);
+  }
+
+  .hero h1 {
+    font-size: clamp(1.35rem, 2.2vw, 1.9rem);
+    margin-bottom: 0;
+  }
+
+  .eyebrow {
+    margin-bottom: 2px;
+    font-size: 0.75rem;
+  }
+
+  .lead {
+    display: none;   /* the question already says it */
+  }
+
+  .hero-art {
+    width: clamp(130px, 13vw, 170px);
+    margin-block: -12px;
+  }
+
+  .search-filter {
+    margin-top: 10px;
+  }
+
+  .section-head {
+    margin: 8px 0 0;
+
+    h2 {
+      font-size: 1.2rem;
+      padding-bottom: 6px;
+    }
+
+    h2::after {
+      height: 3px;
+    }
+
+    .count {
+      margin-bottom: 8px;
+    }
+  }
+
+  .dishes {
+    padding-top: 10px;
+  }
+}
+
+@media (min-width: 992px) {
+  .search-filter ion-searchbar {
+    min-height: 44px;
+  }
+
+  .filter-chips ion-chip {
+    height: 44px;
+  }
+}

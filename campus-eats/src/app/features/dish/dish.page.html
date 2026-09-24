@@ -1,0 +1,91 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <!-- Returns to the menu; works even when the page was opened from a link. -->
+      <ion-back-button defaultHref="/tabs/menu" text="Menu" />
+    </ion-buttons>
+    <ion-title>{{ dish()?.name ?? 'Dish' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="dish-container">
+
+    @if (dish(); as dish) {
+
+      <article class="dish" [class.sold-out]="!dish.available">
+
+        <div class="photo">
+          <img [src]="dish.image" [alt]="dish.name" />
+        </div>
+
+        <div class="info">
+
+          <p class="category">{{ dish.category }}</p>
+          <h1>{{ dish.emoji }} {{ dish.name }}</h1>
+          <p class="price">₱ {{ dish.price }}</p>
+
+          <p class="description">{{ dish.description }}</p>
+
+          <dl class="facts">
+            <div>
+              <dt><ion-icon name="time-outline" aria-hidden="true" /> Ready in</dt>
+              <dd>about {{ dish.prepMinutes }} min</dd>
+            </div>
+            <div>
+              <dt><ion-icon name="star" aria-hidden="true" /> Rating</dt>
+              <dd>{{ dish.rating }} / 5</dd>
+            </div>
+          </dl>
+
+          <!-- Status is a colour AND a word, never colour on its own. -->
+          <ion-chip class="status" [color]="dish.available ? 'success' : 'medium'">
+            {{ dish.available ? 'Available' : 'Sold out' }}
+          </ion-chip>
+
+          <ion-button
+            class="add"
+            expand="block"
+            shape="round"
+            [disabled]="!dish.available"
+            (click)="addToCart()"
+          >
+            <ion-icon name="add" slot="start" aria-hidden="true" />
+            Add to cart
+          </ion-button>
+
+        </div>
+
+      </article>
+
+    } @else if (menu.error()) {
+
+      <app-error-state title="Unable to load this dish" (retry)="menu.reload()" />
+
+    } @else if (menu.loading() || menu.all().length === 0) {
+
+      <!-- Loading: the same shape as the dish that is coming. -->
+      <div class="dish" aria-busy="true" aria-label="Loading the dish">
+        <ion-skeleton-text [animated]="shimmer" class="skeleton-photo" />
+        <div class="info">
+          <ion-skeleton-text [animated]="shimmer" style="width: 30%" />
+          <ion-skeleton-text [animated]="shimmer" style="width: 70%; height: 32px" />
+          <ion-skeleton-text [animated]="shimmer" style="width: 20%; height: 24px" />
+          <ion-skeleton-text [animated]="shimmer" style="width: 100%" />
+          <ion-skeleton-text [animated]="shimmer" style="width: 85%" />
+        </div>
+      </div>
+
+    } @else {
+
+      <!-- Empty: say why, and give the first action. -->
+      <div class="not-found">
+        <h1>🍽️ We couldn't find that dish</h1>
+        <p>It may have been taken off today's menu.</p>
+        <ion-button class="ce-amber" routerLink="/tabs/menu">Back to the menu</ion-button>
+      </div>
+
+    }
+
+  </div>
+</ion-content>

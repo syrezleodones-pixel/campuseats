@@ -1,0 +1,76 @@
+<ion-header class="ce-header">
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-button class="back" routerLink="/tabs/menu">
+        <ion-icon name="arrow-back" slot="start" aria-hidden="true" />
+        Menu
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>
+      <span class="ce-brand">Sign <span class="accent">In</span></span>
+    </ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ce-page">
+  <div class="login-container">
+
+    <section class="ce-card login-card">
+
+      <div class="login-hero">
+        <p class="ce-eyebrow">Welcome back</p>
+        <h1>Sign in to <span class="accent">see your orders</span></h1>
+        <p class="ce-muted">Your order history is kept under your campus account.</p>
+      </div>
+
+      <form (ngSubmit)="submit()">
+
+        <ion-input
+          class="ce-input"
+          fill="outline"
+          label="Email"
+          labelPlacement="stacked"
+          type="email"
+          name="email"
+          autocomplete="email"
+          placeholder="student@campus.edu"
+          [(ngModel)]="email">
+        </ion-input>
+
+        <ion-input
+          class="ce-input"
+          fill="outline"
+          label="Password"
+          labelPlacement="stacked"
+          type="password"
+          name="password"
+          autocomplete="current-password"
+          placeholder="Your password"
+          [(ngModel)]="password">
+        </ion-input>
+
+        @if (error()) {
+          <p class="error" role="alert">{{ error() }}</p>
+        }
+
+        <ion-button
+          class="ce-amber"
+          expand="block"
+          type="submit"
+          [disabled]="busy()">
+          {{ busy() ? 'Signing in…' : 'Sign In' }}
+        </ion-button>
+
+      </form>
+
+      <p class="hint">
+        Demo account: <strong>student&#64;campus.edu</strong> / <strong>ionic123</strong>
+      </p>
+
+    </section>
+
+  </div>
+</ion-content>

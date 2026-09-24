@@ -1,0 +1,61 @@
+ion-tab-bar {
+  --background: var(--ce-surface);
+  --color: var(--ce-muted);
+  /* Icon and label of the chosen tab: the Add-to-cart amber, one shade deeper
+     so the words stay readable on white (4.7:1). Dark mode uses the bright amber. */
+  --color-selected: var(--ce-amber-text);
+  height: 64px;
+}
+
+ion-tab-button {
+  position: relative;
+  font-weight: 700;
+
+  ion-icon {
+    font-size: 26px;
+  }
+}
+
+ion-tab-button.tab-selected {
+  font-weight: 800;
+}
+
+/* The chosen tab gets a bar under it in the Add-to-cart amber,
+   so the state is shown by shape as well as colour. */
+ion-tab-button.tab-selected::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  width: 64px;
+  height: 4px;
+  border-radius: 2px;
+  transform: translateX(-50%);
+  background: var(--ce-amber);
+}
+
+/* ---------- Hover ---------- */
+
+ion-tab-button {
+  transition: color 150ms ease-out;
+}
+
+@media (hover: hover) {
+  /* An unchosen tab previews the chosen look: amber icon and label, a faint bar. */
+  ion-tab-button:not(.tab-selected):hover {
+    --color: var(--ce-amber-text);
+  }
+
+  ion-tab-button:not(.tab-selected):hover::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    width: 40px;
+    height: 4px;
+    border-radius: 2px;
+    transform: translateX(-50%);
+    background: var(--ce-amber);
+    opacity: 0.5;
+  }
+}

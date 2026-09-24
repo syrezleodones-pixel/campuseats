@@ -1,0 +1,124 @@
+
+<ion-header class="ce-header">
+  <ion-toolbar>
+    <ion-title>
+      <span class="ce-brand">Your <span class="accent">Cart</span></span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ce-page">
+
+  <div class="ce-container">
+
+    @if (cart.all().length === 0) {
+
+      <!-- Empty: say why, and give the first action. -->
+      <section class="ce-card ce-empty">
+        <span class="ce-empty-icon" aria-hidden="true">🛒</span>
+        <h2>Your cart is empty</h2>
+        <p>Add some dishes from the menu first.</p>
+        <ion-button class="ce-amber" routerLink="/tabs/menu">
+          Browse Menu
+        </ion-button>
+      </section>
+
+    } @else {
+
+      <section class="ce-hero">
+        <p class="ce-eyebrow">Order summary</p>
+        <h1>Ready to <span class="accent">place your order?</span></h1>
+        <p class="lead">{{ cart.count() }} item{{ cart.count() === 1 ? '' : 's' }} in your cart.</p>
+      </section>
+
+      <div class="cart-layout">
+
+        <!-- Left: the lines. -->
+        <section class="cart-items" aria-label="Items in your cart">
+
+          @for (line of cart.all(); track line.item.id) {
+
+            <div class="ce-card line">
+
+              <!-- Decorative here: the dish name is right beside it. -->
+              <img class="thumb" [src]="line.item.image" alt="" />
+
+              <div class="line-info">
+                <h2 class="line-name">{{ line.item.name }}</h2>
+                <p class="ce-muted">{{ line.quantity }} × ₱ {{ line.item.price }}</p>
+                <p class="ce-amber-text">₱ {{ line.item.price * line.quantity }}</p>
+              </div>
+
+              <div class="line-actions">
+                <ion-button
+                  fill="clear"
+                  [attr.aria-label]="'Edit ' + line.item.name"
+                  (click)="edit(line)"
+                >
+                  <ion-icon name="create-outline" slot="icon-only" aria-hidden="true"></ion-icon>
+                </ion-button>
+
+                <!-- Accessible, operable remove control: real button + spoken name. -->
+                <ion-button
+                  class="remove"
+                  fill="clear"
+                  [attr.aria-label]="'Remove ' + line.item.name"
+                  (click)="remove(line)"
+                >
+                  <ion-icon name="trash-outline" slot="icon-only" aria-hidden="true"></ion-icon>
+                </ion-button>
+              </div>
+
+            </div>
+
+          }
+
+        </section>
+
+        <!-- Right: total, details, one primary action. -->
+        <section class="ce-card checkout" aria-label="Checkout">
+
+          <div class="total">
+            <span>Total</span>
+            <strong class="ce-amber-text">₱ {{ cart.total() }}</strong>
+          </div>
+
+          <h2 class="ce-card-title">Customer information</h2>
+
+          <ion-input
+            class="ce-input"
+            fill="outline"
+            label="Customer Name"
+            labelPlacement="stacked"
+            type="text"
+            autocomplete="name"
+            placeholder="Enter your name"
+            [(ngModel)]="customerName">
+          </ion-input>
+
+          <ion-input
+            class="ce-input"
+            fill="outline"
+            label="Room or Stall"
+            labelPlacement="stacked"
+            type="text"
+            placeholder="Enter room or stall"
+            [(ngModel)]="roomOrStall">
+          </ion-input>
+
+          <ion-button
+            class="ce-amber"
+            expand="block"
+            (click)="place()">
+            Place Order
+          </ion-button>
+
+        </section>
+
+      </div>
+
+    }
+
+  </div>
+
+</ion-content>
